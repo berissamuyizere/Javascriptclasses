@@ -1,1 +1,1 @@
-# Python-classes
+# Javascript-classes
