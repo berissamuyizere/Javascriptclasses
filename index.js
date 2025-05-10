@@ -27,7 +27,7 @@ FeatureToggle.prototype.canAccess = function(userRole){
             console.log(`You have ${userRole} access`);
             break;
         default:
-            "Access not found"
+            "You have no access"
 
     }
 }
