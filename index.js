@@ -149,7 +149,7 @@ Order.prototype.updateStatus = function(payment){
 
  Employee.prototype.feedBack = function(newFeedback){
     if(newFeedback.trim().length > 0){
-        this.feedBack.push(newFeedback)
+        this.feedback.push(newFeedback)
     }
  }
 
@@ -157,29 +157,42 @@ const employee = new Employee(2,  "Beza", {communication: 2, efficiency: 3, reli
 console.log(employee.averageScore());
 console.log(employee.classifyPerformance())
 
-// employee.feedBack("improved")
+employee.feedBack("improved")
+console.log(employee.feedback)
 
 
 //  Build a simple e-learning system where a Course class has properties: title (string), instructor (object with name and expertise), and students (array of objects with name and completionStatus), then add prototype methods to return names of students who completed the course, count enrolled students by expertise area, and use control flow to output different messages for instructors with more or less than 5 students.
 
 
-function Course(title, instructor, students){
+function Course(title, instructor, students) {
     this.title = title;
     this.instructor = instructor;
-    this.students = students
+    this.students = students; 
 }
-
-Course.prototype.completedStudents = function(){
-    return this.students.filter(student => student.completionStatus).map(student.name);
+Course.prototype.completedStudents = function() {
+    return this.students
+        .filter(student => student.completionStatus === "completed")
+        .map(student => student.name);  
 };
-
-Course.prototype.enrolledStudentsByExpertise = function(){
-    return this.students.filter(student => student.expertise === this.instructor.expertise).length;
-
+Course.prototype.enrolledStudentsByExpertise = function() {
+    return this.students.filter(student => 
+        student.expertise === this.instructor.expertise).length;
 };
-
-Course.prototype.instructorMessage = function(){
-    return this.students.length > 5 ? "High demand instructor" : "Normal workload instructor"
-}
-
-const course = Course("Software engineering", {name:"Benard", expertise: "FrontEnd"}, [{name: "Bonneur", completionStatus: 20},{name: "Bobette", completionStatus: 20},{name: "Bonneur", completionStatus: 20},{name: "Bonneur", completionStatus: 20}])
+Course.prototype.instructorMessage = function() {
+    return this.students.length > 5 ? "Your lesson is loved" : "You need more students";
+};
+const course = new Course(
+    "Software engineering",
+    {name: "Benard", expertise: "FrontEnd"},
+    [
+        {name: "Bonneur", completionStatus: true},
+        {name: "Bobette", completionStatus: "pending", expertise: "FrontEnd"},
+        {name: "Alice", completionStatus: "completed", expertise: "FrontEnd"},
+        {name: "Bob", completionStatus: "completed" , expertise: "FrontEnd"},
+        {name: "Aline", completionStatus: "pending", expertise: "backend"},
+        {name: "Boby", completionStatus: "pending" , expertise: "FrontEnd"}
+    ]
+);
+console.log(course.completedStudents());  
+console.log(course.enrolledStudentsByExpertise());
+console.log(course.instructorMessage())
